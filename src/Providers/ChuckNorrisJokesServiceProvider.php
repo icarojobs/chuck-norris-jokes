@@ -24,11 +24,37 @@ class ChuckNorrisJokesServiceProvider extends ServiceProvider
             __DIR__ . '/../../resources/views' => resource_path('views/vendor/chuck-norris'),
         ], 'views');
 
-        Route::get('/chuck-norris', ChuckNorrisController::class);
+        $this->publishes([
+            __DIR__ . '/../../config/chuck-norris.php' => base_path('config/chuck-norris.php'),
+        ], 'config');
+
+        if ($this->canPublishMigrations()) {
+            $this->publishes([
+                __DIR__ . '/../../database/migrations/create_jokes_table.php.stub' =>
+                    database_path('migrations/'.date('Y_m_d_His').'_create_jokes_table.php'),
+            ], 'migrations');
+        }
+
+        Route::get(config('chuck-norris.route'), ChuckNorrisController::class);
     }
 
     public function register(): void
     {
         $this->app->bind('chuck-norris', fn () => new JokeFactory());
+
+        $this->mergeConfigFrom(__DIR__.'/../../config/chuck-norris.php', 'chuck-norris');
+    }
+
+    private function canPublishMigrations(): bool
+    {
+        $migrations = scandir(database_path('migrations'));
+
+        foreach ($migrations as $migration) {
+            if (str($migration)->contains('create_jokes_table')) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
