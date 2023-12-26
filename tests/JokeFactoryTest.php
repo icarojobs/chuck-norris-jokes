@@ -2,11 +2,25 @@
 
 namespace TioJobs\ChuckNorrisJokes\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testbench\TestCase;
+use TioJobs\ChuckNorrisJokes\Facades\ChuckNorris;
 use TioJobs\ChuckNorrisJokes\Factories\JokeFactory;
+use TioJobs\ChuckNorrisJokes\Providers\ChuckNorrisJokesServiceProvider;
 
 class JokeFactoryTest extends TestCase
 {
+    protected function getPackageProviders($app): array
+    {
+        return [ChuckNorrisJokesServiceProvider::class];
+    }
+
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'ChuckNorris' => ChuckNorris::class,
+        ];
+    }
+
     /** @test */
     public function it_returns_a_random_joke()
     {
@@ -14,7 +28,7 @@ class JokeFactoryTest extends TestCase
             'This is a joke',
         ]);
 
-        $joke = $jokes->getRandomJoke();
+        $joke = $jokes->getRandomJokes();
 
         $this->assertSame('This is a joke', $joke);
     }
@@ -32,8 +46,16 @@ class JokeFactoryTest extends TestCase
 
         $jokes = new JokeFactory();
 
-        $joke = $jokes->getRandomJoke();
+        $joke = $jokes->getRandomJokes();
 
         $this->assertContains($joke, $chuckNorrisJokes);
+    }
+
+    /** @test */
+    public function it_returns_a_joke_factory_instance_by_facade()
+    {
+        $joke = ChuckNorris::getRandomJokes();
+
+        $this->assertIsString($joke);
     }
 }
