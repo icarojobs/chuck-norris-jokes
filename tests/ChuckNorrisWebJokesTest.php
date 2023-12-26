@@ -2,12 +2,11 @@
 
 namespace TioJobs\ChuckNorrisJokes\Tests;
 
-use Illuminate\Support\Facades\Artisan;
 use Orchestra\Testbench\TestCase;
 use TioJobs\ChuckNorrisJokes\Facades\ChuckNorris;
 use TioJobs\ChuckNorrisJokes\Providers\ChuckNorrisJokesServiceProvider;
 
-class JokesCommandTest extends TestCase
+class ChuckNorrisWebJokesTest extends TestCase
 {
     protected function getPackageProviders($app): array
     {
@@ -22,18 +21,11 @@ class JokesCommandTest extends TestCase
     }
 
     /** @test */
-    public function the_console_command_returns_a_joke()
+    public function check_if_joke_is_visible_on_chuck_norris_web_path()
     {
-        $this->withoutMockingConsoleOutput();
-
-        ChuckNorris::shouldReceive('getRandomJokes')
-            ->once()
-            ->andReturn('some joke');
-
-        $this->artisan('make:joke');
-
-        $output = Artisan::output();
-
-        $this->assertSame('some joke'.PHP_EOL, $output);
+        $this->get('/chuck-norris')
+            ->assertViewIs('chuck-norris::joke') // carrega a view resources.views.jokes
+            ->assertViewHas('joke') // tem a variável $joke
+            ->assertOk();
     }
 }
