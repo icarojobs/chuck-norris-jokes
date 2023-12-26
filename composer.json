@@ -1,0 +1,29 @@
+{
+    "name": "tio-jobs/chuck-norris-jokes",
+    "description": "Create random Chuck Norris jokes.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tio Jobs",
+            "email": "icarojobsoficial@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TioJobs\\ChuckNorrisJokes\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TioJobs\\ChuckNorrisJokes\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "minimum-stability": "stable"
+}
