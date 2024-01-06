@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5",
-        "orchestra/testbench": "^7.33.0 || ^8.13.0 || ^9.0.0"
+        "orchestra/testbench": "^7.33.0 || ^8.13.0 || ^9.0.0",
+        "friendsofphp/php-cs-fixer": "^3.46"
     },
     "minimum-stability": "stable"
 }

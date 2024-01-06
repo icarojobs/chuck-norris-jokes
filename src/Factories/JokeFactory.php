@@ -12,7 +12,8 @@ class JokeFactory
             "Chuck Norris does not sleep. He waits.",
             "On the 7th day, God rested ... Chuck Norris took over.",
         ],
-    ) { }
+    ) {
+    }
 
     public function getRandomJokes()
     {

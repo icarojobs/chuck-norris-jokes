@@ -3,8 +3,10 @@
 /reports
 /build
 .phpunit.result.cache
+.php-cs-fixer.cache
 composer.lock
 /.idea
 .DS_Store
 /.vscode
 ./index.php
+.env
